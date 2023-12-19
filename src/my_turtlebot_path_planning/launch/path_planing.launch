@@ -1,0 +1,53 @@
+<launch>
+
+  <!--map_server-->
+  <!--- Run AMCL -->
+
+  <include file="$(find my_turtlebot_localization)/launch/amcl_demo.launch" />
+
+​
+
+  <!-- Run move_base -->
+  <arg name="no_static_map" default="false"/>
+
+  <arg name="base_global_planner" default="navfn/NavfnROS"/>
+  <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
+  <!--respawn attribute specifies whether the node should be automatically restarted if it exits unexpectedly. 
+  In this case, it is set to false, which means that the node will not be respawned.-->
+  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
+
+    <param name="base_global_planner" value="$(arg base_global_planner)"/>
+    <param name="base_local_planner" value="$(arg base_local_planner)"/>
+
+    <rosparam file="$(find my_turtlebot_path_planning)/config/move_base_params.yaml" command="load" />
+
+    <rosparam file="$(find my_turtlebot_path_planning)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+
+    <rosparam file="$(find my_turtlebot_path_planning)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+
+    <rosparam file="$(find my_turtlebot_path_planning)/config/local_costmap_params.yaml" command="load" ns="local_costmap" />
+
+    <param name="local_costmap/width" value="1.5"/>
+
+    <param name="local_costmap/height" value="1.5"/>
+
+    <rosparam file="$(find my_turtlebot_path_planning)/config/global_costmap_params.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)"/>
+
+
+    <param name="controller_frequency" value="5.0" />
+    <!-- parameter specifies the maximum amount of time (in seconds) that the controller will wait for the robot to reach its goal before the goal is considered a failure. If the robot does not reach the goal within this time frame, the controller will switch to a recovery behavior. -->
+    <param name="controller_patience" value="15.0" />
+
+  </node>
+
+​
+
+</launch>
+
+
+
+
+
+ 
+
+  

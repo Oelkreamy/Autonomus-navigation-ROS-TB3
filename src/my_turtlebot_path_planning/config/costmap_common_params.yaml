@@ -1,0 +1,21 @@
+robot_radius: 0.06
+footprint_padding: 0.0  # padding is 0.1 by default, making difficult to pass through narrow places
+robot_base_frame: base_footprint   
+
+obstacle_range: 3.0
+raytrace_range: 3.5
+update_frequency: 4.0
+transform_tolerance: 0.5 #The maximum time that a transform (e.g. from a sensor frame to the robot's base frame) should be cached before being considered stale and updated.
+cost_scaling_factor: 3.0 #A scaling factor used to adjust the relative importance of obstacles vs. the robot's goal when computing a path.
+
+#layer definitions
+static:
+    map_topic: /map
+    subscribe_to_updates: true
+
+obstacles_layer:
+    observation_sources: laser
+    laser: {data_type: LaserScan, clearing: true, marking: true, topic: scan , inf_is_valid: true, obstacle_range: 3}
+
+inflation:
+    inflation_radius: 0.1

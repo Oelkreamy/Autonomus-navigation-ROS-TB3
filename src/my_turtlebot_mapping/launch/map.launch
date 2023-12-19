@@ -1,0 +1,56 @@
+
+<launch>
+  <arg name="scan_topic"  default="/scan" />
+  <arg name="base_frame"  default="base_footprint"/>
+  <arg name="odom_frame"  default="odom"/>
+
+  <node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
+    <param name="base_frame" value="$(arg base_frame)"/>
+    <param name="odom_frame" value="$(arg odom_frame)"/>
+    <param name="map_update_interval" value="5.0"/>    <!--Sets the time (in seconds) to wait until update the map.-->
+    <param name="maxUrange" value="6.0"/> <!--The maximum range of the laser scanner used in the mapping process.-->
+    <param name="maxRange" value="8.0"/> <!--The maximum range of the laser scanner used in the laser likelihood field computation.-->
+    <param name="sigma" value="0.05"/> <!--The standard deviation of the noise in the laser range measurements.-->
+    <param name="kernelSize" value="1"/> <!--The size of the kernel used for laser likelihood field computation.-->
+    <param name="lstep" value="0.05"/> <!--The linear resolution used in the laser ray casting process.-->
+    <param name="astep" value="0.05"/> <!--The angular resolution used in the laser ray casting process.-->
+    <param name="iterations" value="5"/> <!--The number of iterations used for laser ray casting.-->
+    <param name="lsigma" value="0.075"/> <!--The standard deviation of the noise in the robot's motion estimates.-->
+    <param name="ogain" value="3.0"/> <!--The gain used in the calculation of the laser scan's likelihood.-->
+    <param name="lskip" value="0"/> <!--The number of laser scans to skip before processing.-->
+    <param name="minimumScore" value="200"/> <!--The minimum score required for a laser scan to be considered valid.-->
+    <param name="srr" value="0.01"/>
+    <param name="srt" value="0.02"/>
+    <param name="str" value="0.01"/>
+    <param name="stt" value="0.02"/>
+    <param name="linearUpdate" value="0.5"/>          <!--Sets the linear distance that the robot has to move in order to process a laser reading.-->
+    <param name="angularUpdate" value="0.436"/>       <!--Sets the angular distance that the robot has to move in order to process a laser reading.-->
+    <param name="temporalUpdate" value="-1.0"/>       <!--Sets the time (in seconds) to wait between laser readings. If this value is set to -1.0, then this function is turned off.-->
+    <param name="resampleThreshold" value="0.5"/>
+    <param name="particles" value="80"/>
+  <!--
+    <param name="xmin" value="-50.0"/>
+    <param name="ymin" value="-50.0"/>
+    <param name="xmax" value="50.0"/>
+    <param name="ymax" value="50.0"/>
+  make the starting size small for the benefit of the Android client's memory...
+  -->
+    <param name="xmin" value="-5.0"/>
+    <param name="ymin" value="-5.0"/>
+    <param name="xmax" value="5.0"/>
+    <param name="ymax" value="5.0"/>
+    <!--delta: The resolution of the map.
+    llsamplerange: The range of the likelihood sampling in the linear direction.
+    llsamplestep: The step size of the likelihood sampling in the linear direction.
+    lasamplerange: The range of the likelihood sampling in the angular direction.
+    lasamplestep: The step size of the likelihood sampling in the angular direction.-->
+    <param name="delta" value="0.1"/>
+    <param name="llsamplerange" value="0.01"/>
+    <param name="llsamplestep" value="0.01"/>
+    <param name="lasamplerange" value="0.005"/>
+    <param name="lasamplestep" value="0.005"/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+  </node>
+</launch>
+
+

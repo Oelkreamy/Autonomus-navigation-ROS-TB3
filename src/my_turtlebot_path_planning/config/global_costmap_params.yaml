@@ -1,0 +1,7 @@
+global_frame: map
+rolling_window: false #"rolling_window" parameter is set to "false", which means that the costmap does not use a rolling window technique to smooth out data. Instead, the costmap is likely generated using a fixed map of the environment or updated based on sensor readings at a fixed rate.
+
+
+plugins:
+  - {name: static,                  type: "costmap_2d::StaticLayer"}
+  - {name: inflation_layer,         type: "costmap_2d::InflationLayer"}

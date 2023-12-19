@@ -1,0 +1,26 @@
+<launch>
+
+  <include file = '$(find my_turtlebot_mapping)/launch/provide_map.launch' />
+  <arg name="use_map_topic" default="false"/>
+  <arg name="scan_topic" default="scan" />
+
+
+  <node pkg="amcl" type="amcl" name="amcl">
+    
+    <rosparam file='$(find my_turtlebot_localization)/config/params.yaml' command='load'/>
+    <remap from="scan" to="$(arg scan_topic)"/>
+        
+  </node>
+
+
+</launch>
+
+<!--
+laser_z_hit represents the probability that the sensor reading is a hit, i.e., it corresponds to a point on a real obstacle. The default value of laser_z_hit is 0.95, which means that the model is biased towards hits and assigns a high probability to the readings that are close to the expected range.
+
+laser_z_short represents the probability that the sensor reading is short, i.e., it corresponds to a point that is closer to the robot than the actual obstacle. The default value of laser_z_short is 0.1, which means that the model assumes that short readings are relatively rare.
+
+laser_z_max represents the probability that the sensor reading is a maximum range reading, i.e., it corresponds to a point that is farther from the robot than the actual obstacle. The default value of laser_z_max is 0.05, which means that the model assumes that maximum range readings are relatively rare.
+
+laser_z_rand represents the probability that the sensor reading is a random measurement, i.e., it does not correspond to any point on a real obstacle. The default value of laser_z_rand is 0.05, which means that the model assumes that random measurements are relatively rare.
+-->

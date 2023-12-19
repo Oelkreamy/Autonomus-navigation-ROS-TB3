@@ -1,0 +1,9 @@
+global_frame: odom
+rolling_window: true #The "rolling_window" parameter is set to "true", which means that the costmap uses a rolling window technique to smooth out data. This technique divides the data sequence into smaller, overlapping segments or windows, and applies a calculation or operation to the data within each window. The window is then "rolled" or shifted by one data point, and the operation is repeated on the new window. This process is repeated until the end of the data sequence is reached. This technique can provide a smoother estimate of the underlying signal by averaging or filtering out short-term fluctuations in the data.
+track_unknown_space: true #The "track_unknown_space" parameter is also set to "true", which means that the costmap tracks areas of unknown space or unexplored regions of the environment. This can be useful in robotics applications where the robot needs to explore new areas or navigate through unstructured environments.
+
+
+
+plugins:
+  - {name: obstacles_layer,           type: "costmap_2d::ObstacleLayer"}
+  - {name: inflation_layer,           type: "costmap_2d::InflationLayer"}

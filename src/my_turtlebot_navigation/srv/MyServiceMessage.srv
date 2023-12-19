@@ -1,0 +1,11 @@
+# request
+
+string label
+
+---
+
+#response
+
+bool navigation_successfull
+
+string message
